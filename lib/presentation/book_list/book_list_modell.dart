@@ -10,9 +10,16 @@ class BookListModel extends ChangeNotifier {
     final docs = await FirebaseFirestore.instance.collection('books').get();
     // print(docs.docs);
     // 取得したdocsデータをmapに変換する。
-    final books = docs.docs.map((doc) => Book(doc['title'])).toList();
+    final books = docs.docs.map((doc) => Book(doc)).toList();
     this.books = books;
     // print(this.books[0].title);
     notifyListeners();
+  }
+
+  Future deleteBook(Book book) async {
+    await FirebaseFirestore.instance
+        .collection('books')
+        .doc(book.documentID)
+        .delete();
   }
 }
