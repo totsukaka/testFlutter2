@@ -17,6 +17,9 @@ dependencies:
   cloud_firestore: ^0.16.0+1
   firebase_auth: ^0.20.1
   firebase_storage: ^7.0.0
+  sqflite:
+  path:
+#  moor_flutter: ^3.1.0
 
 dev_dependencies:
   flutter_test:

@@ -35,7 +35,6 @@ class BookListPage extends StatelessWidget {
                     },
                   ),
                   onLongPress: () async {
-                    // todo　ロングプレスで削除
                     await showDialog(
                       context: context,
                       // barrierDismissible: false, // user must tap button!
@@ -47,7 +46,6 @@ class BookListPage extends StatelessWidget {
                               child: Text('ok'),
                               onPressed: () async {
                                 Navigator.of(context).pop();
-                                // todo 削除メソッド
                                 await deleteBook(context, model, book);
                               },
                             ),
@@ -89,7 +87,7 @@ class BookListPage extends StatelessWidget {
     try {
       await model.deleteBook(book);
       model.fetchBooks();
-      // await _showDialog(context, '削除しました');
+      // await _showDialog(context, '削除しました'); //解決方法不明
     } catch (e) {
       await _showDialog(context, e.toString());
     }

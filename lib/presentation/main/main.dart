@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app3/presentation/book_list/book_list_page.dart';
+import 'package:flutter_app3/presentation/login/login_page.dart';
 import 'package:flutter_app3/presentation/main/main_model.dart';
+import 'package:flutter_app3/presentation/signup/signup_page.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -36,6 +38,24 @@ class MyApp extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => BookListPage()),
+                    );
+                  },
+                ),
+                RaisedButton(
+                  child: Text('サインイン'),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignUpPage()),
+                    );
+                  },
+                ),
+                RaisedButton(
+                  child: Text('ログイン'),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
                     );
                   },
                 )
