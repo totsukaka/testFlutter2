@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app3/book_list_page.dart';
-import 'package:flutter_app3/main_model.dart';
+import 'package:flutter_app3/presentation/book_list/book_list_page.dart';
+import 'package:flutter_app3/presentation/main/main_model.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
