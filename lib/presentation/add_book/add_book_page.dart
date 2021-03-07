@@ -17,38 +17,69 @@ class AddBookPage extends StatelessWidget {
       textEditingController.text = book.title;
     }
 
-    // Firebase.initializeApp();
     return ChangeNotifierProvider<AddBookModel>(
       create: (_) => AddBookModel(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(isUpdate ? '本の編集' : '本の追加'),
-        ),
-        body: Consumer<AddBookModel>(builder: (context, model, child) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                TextField(
-                  controller: textEditingController,
-                  onChanged: (text) {
-                    model.bookTitle = text;
-                  },
-                ),
-                RaisedButton(
-                  child: Text(isUpdate ? '更新する' : '追加する'),
-                  onPressed: () async {
-                    if (isUpdate) {
-                      await updateBook(model, context);
-                    } else {
-                      await addBook(model, context);
-                    }
-                  },
-                ),
-              ],
+      child: Stack(
+        children: [
+          Scaffold(
+            appBar: AppBar(
+              title: Text(isUpdate ? '本の編集' : '本の追加'),
             ),
-          );
-        }),
+            body: Consumer<AddBookModel>(builder: (context, model, child) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: 100,
+                      height: 160,
+                      child: InkWell(
+                        onTap: () async {
+                          await model.showImagePicker();
+                        },
+                        child: model.imageFile != null
+                            ? Image.file(model.imageFile)
+                            : isUpdate
+                                ? Image.network(book.imageURL)
+                                : Container(
+                                    color: Colors.grey,
+                                  ),
+                      ),
+                    ),
+                    TextField(
+                      controller: textEditingController,
+                      onChanged: (text) {
+                        model.bookTitle = text;
+                      },
+                    ),
+                    RaisedButton(
+                      child: Text(isUpdate ? '更新する' : '追加する'),
+                      onPressed: () async {
+                        model.startLoading();
+                        if (isUpdate) {
+                          await updateBook(model, context);
+                        } else {
+                          await addBook(model, context);
+                        }
+                        model.endLoading();
+                      },
+                    ),
+                  ],
+                ),
+              );
+            }),
+          ),
+          Consumer<AddBookModel>(builder: (context, model, child) {
+            return model.isLoading
+                ? Container(
+                    color: Colors.grey.withOpacity(0.7),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : SizedBox();
+          })
+        ],
       ),
     );
   }

@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
                 RaisedButton(
-                  child: Text('ボタン'),
+                  child: Text('本一覧'),
                   onPressed: () {
                     Navigator.push(
                       context,
