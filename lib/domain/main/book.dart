@@ -2,11 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Book {
   Book(DocumentSnapshot doc) {
-    documentID = doc.id;
-    title = doc.data()['title'];
-    imageURL = doc.data()['imageURL'];
+    this.documentID = doc.id;
+    this.title = doc.data()['title'];
+    this.imageURL = doc.data()['imageURL'];
+    final Timestamp timestamp = doc.data()['createdAt'];
+    this.createdAt = timestamp.toDate();
   }
   String documentID;
   String title;
   String imageURL;
+  DateTime createdAt;
 }

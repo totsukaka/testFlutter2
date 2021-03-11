@@ -9,10 +9,14 @@ class BookListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Firebase.initializeApp();
     return ChangeNotifierProvider<BookListModel>(
-      create: (_) => BookListModel()..fetchBooks(),
+      ///リアルタイムで変更される
+      create: (_) => BookListModel()..getTodoListRealtime(),
+
+      ///画面遷移と同時に更新
+      // create: (_) => BookListModel()..fetchBooks(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('本一覧'),
+          title: Text('ラーメン一覧'),
         ),
         body: Consumer<BookListModel>(builder: (context, model, child) {
           final books = model.books;

@@ -7,10 +7,10 @@ class BookListModel extends ChangeNotifier {
 
   Future fetchBooks() async {
     // firestoreのbooksデータを取得し変数docsに変換する。
-    final docs = await FirebaseFirestore.instance.collection('books').get();
-    // print(docs.docs);
+    final snapshot = await FirebaseFirestore.instance.collection('books').get();
+    final docs = snapshot.docs;
     // 取得したdocsデータをmapに変換する。
-    final books = docs.docs.map((doc) => Book(doc)).toList();
+    final books = docs.map((doc) => Book(doc)).toList();
     this.books = books;
     // print(this.books[0].title);
     notifyListeners();
@@ -21,5 +21,17 @@ class BookListModel extends ChangeNotifier {
         .collection('books')
         .doc(book.documentID)
         .delete();
+  }
+
+  void getTodoListRealtime() {
+    final snapshots =
+        FirebaseFirestore.instance.collection('books').snapshots();
+    snapshots.listen((snapshot) {
+      final docs = snapshot.docs;
+      final bookList = docs.map((doc) => Book(doc)).toList();
+      bookList.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+      this.books = bookList;
+      notifyListeners();
+    });
   }
 }
