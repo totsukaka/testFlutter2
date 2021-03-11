@@ -4,7 +4,7 @@ import 'package:flutter_app3/database/db.dart';
 import 'package:flutter_app3/presentation/book_list/book_list_page.dart';
 import 'package:flutter_app3/presentation/login/login_page.dart';
 import 'package:flutter_app3/presentation/main/main_model.dart';
-import 'package:flutter_app3/presentation/moor_list/moor_page.dart';
+import 'package:flutter_app3/presentation/moor_list/todo_add_page.dart';
 import 'package:flutter_app3/presentation/signup/signup_page.dart';
 import 'package:provider/provider.dart';
 
@@ -37,8 +37,8 @@ class MyApp extends StatelessWidget {
                     fontSize: 30,
                   ),
                 ),
-                RaisedButton(
-                  child: Text('本一覧'),
+                ElevatedButton(
+                  child: Text('ラーメン図鑑'),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -46,8 +46,16 @@ class MyApp extends StatelessWidget {
                     );
                   },
                 ),
-                RaisedButton(
-                  child: Text('サインイン'),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.brown),
+                    shape: MaterialStateProperty.all<OutlinedBorder>(
+                        RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                    )),
+                  ),
+                  child: Text('登録'),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -55,7 +63,7 @@ class MyApp extends StatelessWidget {
                     );
                   },
                 ),
-                RaisedButton(
+                ElevatedButton(
                   child: Text('ログイン'),
                   onPressed: () {
                     Navigator.push(
@@ -64,12 +72,12 @@ class MyApp extends StatelessWidget {
                     );
                   },
                 ),
-                RaisedButton(
+                ElevatedButton(
                   child: Text('moor!'),
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MoorListPage()),
+                      MaterialPageRoute(builder: (context) => TodoAddPage()),
                     );
                   },
                 )

@@ -49,11 +49,20 @@ class MyDatabase extends _$MyDatabase {
   }
 
   Future<int> addTodoEntry(TodosCompanion entry) {
-    print('database_____!!!!');
     return into(todos).insert(entry);
   }
 
   Future<List<Todo>> getAllTodoEntries() {
     return select(todos).get();
+  }
+
+  /// 変更された行数を返す
+  Future<int> updateTodo(int id, TodosCompanion todo) {
+    return (update(todos)..where((it) => it.id.equals(id))).write(todo);
+  }
+
+  /// 変更された行数を返す
+  Future<int> deleteTodo(int id) {
+    return (delete(todos)..where((it) => it.id.equals(id))).go();
   }
 }

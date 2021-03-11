@@ -50,7 +50,6 @@ class AddBookModel extends ChangeNotifier {
       imageURL = await _uploadImage();
     }
 
-    print('updateBook');
     if (bookTitle.isEmpty) {
       updateBookTitle = book.title;
     } else {

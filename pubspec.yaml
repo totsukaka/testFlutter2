@@ -12,21 +12,21 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.0
-  provider: ^4.3.3
-  firebase_core: ^0.7.0
-  cloud_firestore: ^0.16.0+1
-  firebase_auth: ^0.20.1
-  firebase_storage: ^7.0.0
-  image_picker: ^0.6.7+22
-  moor_flutter: ^3.1.0
-  sqlite3_flutter_libs: ^0.4.0+1
+  provider: ^5.0.0
+  firebase_core: ^1.0.1
+  cloud_firestore: ^1.0.1
+  firebase_auth: ^1.0.1
+  firebase_storage: ^8.0.0
+  image_picker: ^0.7.2+1
+  moor_flutter: ^4.0.0-nullsafety
+  sqlite3_flutter_libs: ^0.4.1
   path_provider:
   path:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  moor_generator: ^3.4.0
+  moor_generator: ^4.1.0
   build_runner:
 
 flutter:

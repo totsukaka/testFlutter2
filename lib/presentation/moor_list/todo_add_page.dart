@@ -1,21 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app3/database/db.dart';
 import 'package:provider/provider.dart';
 
-import 'moor_model.dart';
+import 'moor_list_page.dart';
+import 'todo_model.dart';
 
-class MoorListPage extends StatelessWidget {
+class TodoAddPage extends StatelessWidget {
+  TodoAddPage({this.todo});
+  final Todo todo;
+
   @override
   Widget build(BuildContext context) {
     final titleController = TextEditingController();
     final contentController = TextEditingController();
 
-    return ChangeNotifierProvider<MoorModel>(
-      create: (_) => MoorModel(),
+    /// 新規(false)か更新(true)か
+    final bool updateFlag = todo != null;
+
+    if (updateFlag) {
+      titleController.text = todo.title;
+      contentController.text = todo.content;
+    }
+
+    return ChangeNotifierProvider<TodoModel>(
+      create: (_) => TodoModel(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('サインアップ'),
+          title: Text(updateFlag ? 'todoの編集' : 'todoの新規追加'),
         ),
-        body: Consumer<MoorModel>(builder: (context, model, child) {
+        body: Consumer<TodoModel>(builder: (context, model, child) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -34,27 +47,35 @@ class MoorListPage extends StatelessWidget {
                     model.content = text;
                   },
                 ),
-                RaisedButton(
-                  child: Text('登録する'),
+                ElevatedButton(
+                  child: Text(updateFlag ? '更新' : '登録'),
                   onPressed: () async {
                     try {
-                      await model.registerToMoor();
-                      _showDialog(context, '登録完了しました');
+                      model.startLoading();
+
+                      if (updateFlag) {
+                        ///更新
+                        await model.updateToMoor(todo.id, todo);
+                      } else {
+                        ///登録
+                        await model.registerToMoor();
+                      }
+                      model.endLoading();
+
+                      _showMordal(context, '登録完了しました');
                     } catch (e) {
-                      _showDialog(context, e.toString());
+                      _showMordal(context, e.toString());
                       print(e);
                     }
                   },
                 ),
-                RaisedButton(
+                ElevatedButton(
                   child: Text('一覧の表示'),
-                  onPressed: () async {
-                    try {
-                      await model.printToMoor();
-                    } catch (e) {
-                      _showDialog(context, e.toString());
-                      print(e);
-                    }
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MoorListPage()),
+                    );
                   },
                 ),
               ],
@@ -65,7 +86,7 @@ class MoorListPage extends StatelessWidget {
     );
   }
 
-  Future _showDialog(BuildContext context, String title) {
+  Future _showMordal(BuildContext context, String title) {
     showDialog(
       context: context,
       barrierDismissible: false, // user must tap button!

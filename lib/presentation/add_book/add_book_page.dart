@@ -52,7 +52,7 @@ class AddBookPage extends StatelessWidget {
                         model.bookTitle = text;
                       },
                     ),
-                    RaisedButton(
+                    ElevatedButton(
                       child: Text(isUpdate ? '更新する' : '追加する'),
                       onPressed: () async {
                         model.startLoading();
