@@ -4,7 +4,7 @@ import 'package:flutter_app3/presentation/add_book/add_book_page.dart';
 import 'package:flutter_app3/presentation/book_list/book_list_modell.dart';
 import 'package:provider/provider.dart';
 
-class BookListPage extends StatelessWidget {
+class BookListPage2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BookListModel>(
@@ -15,7 +15,7 @@ class BookListPage extends StatelessWidget {
       // create: (_) => BookListModel()..fetchBooks(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('ラーメン一覧'),
+          title: Text('ラーメン一覧2'),
           actions: [
             Consumer<BookListModel>(builder: (context, model, child) {
               final isActive = model.checkBeforeActiveFinishButton();
@@ -40,16 +40,54 @@ class BookListPage extends StatelessWidget {
           final listTiles = books;
           return ListView(
             children: books
-                .map(
-                  (book) => CheckboxListTile(
-                    title: Text(book.title),
-                    value: book.isCheck,
-                    onChanged: (bool value) {
-                      book.isCheck = !book.isCheck;
-                      model.reload();
-                    },
-                  ),
-                )
+                .map((book) => ListTile(
+                          leading: Text(book.documentID),
+                          title: Text(book.title),
+
+                          /// 編集ボタン
+                          trailing: IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AddBookPage(book: book),
+                                  // 縦スクロールで遷移(前画面に戻るときは×ボタンになる)
+                                  fullscreenDialog: true,
+                                ),
+                              );
+                              model.fetchBooks();
+                            },
+                          ),
+                        )
+
+                    /// 先頭の写真
+                    // leading: Image.network(
+                    //   book.imageURL,
+                    // ),
+
+                    ///LongPressで削除
+                    // onLongPress: () async {
+                    //   await showDialog(
+                    //     context: context,
+                    //     // barrierDismissible: false, // user must tap button!
+                    //     builder: (BuildContext context) {
+                    //       return AlertDialog(
+                    //         title: Text('${book.title}を削除しますか'),
+                    //         actions: <Widget>[
+                    //           TextButton(
+                    //             child: Text('ok'),
+                    //             onPressed: () async {
+                    //               Navigator.of(context).pop();
+                    //               await deleteBook(context, model, book);
+                    //             },
+                    //           ),
+                    //         ],
+                    //       );
+                    //     },
+                    //   );
+                    // },
+                    )
                 .toList(),
           );
         }),

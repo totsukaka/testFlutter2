@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app3/database/db.dart';
 import 'package:flutter_app3/presentation/book_list/book_list_page.dart';
+import 'package:flutter_app3/presentation/book_list/book_list_page2.dart';
 import 'package:flutter_app3/presentation/login/login_page.dart';
 import 'package:flutter_app3/presentation/main/main_model.dart';
 import 'package:flutter_app3/presentation/moor_list/todo_add_page.dart';
@@ -43,6 +44,15 @@ class MyApp extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => BookListPage()),
+                    );
+                  },
+                ),
+                ElevatedButton(
+                  child: Text('ラーメン図鑑2'),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => BookListPage2()),
                     );
                   },
                 ),

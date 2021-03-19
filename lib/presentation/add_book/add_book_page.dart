@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app3/domain/main/book.dart';
 import 'package:flutter_app3/presentation/add_book/add_book_model.dart';
+import 'package:flutter_app3/presentation/book_list/book_list_modell.dart';
 import 'package:provider/provider.dart';
 
 class AddBookPage extends StatelessWidget {
@@ -8,17 +9,22 @@ class AddBookPage extends StatelessWidget {
 
   final Book book;
 
+  // AddBookPage({this.model});
+  // final AddBookModel model;
+
   @override
   Widget build(BuildContext context) {
     final bool isUpdate = book != null;
     final textEditingController = TextEditingController();
+    AddBookModel model = AddBookModel();
 
     if (isUpdate) {
       textEditingController.text = book.title;
     }
 
-    return ChangeNotifierProvider<AddBookModel>(
-      create: (_) => AddBookModel(),
+    return ChangeNotifierProvider<AddBookModel>.value(
+      value: model,
+      // create: (_) => BookListModel(),
       child: Stack(
         children: [
           Scaffold(
@@ -33,23 +39,24 @@ class AddBookPage extends StatelessWidget {
                     SizedBox(
                       width: 100,
                       height: 160,
-                      child: InkWell(
-                        onTap: () async {
-                          await model.showImagePicker();
-                        },
-                        child: model.imageFile != null
-                            ? Image.file(model.imageFile)
-                            : isUpdate
-                                ? Image.network(book.imageURL)
-                                : Container(
-                                    color: Colors.grey,
-                                  ),
-                      ),
+
+                      /// child: InkWell(
+                      ///   onTap: () async {
+                      //     await model.showImagePicker();
+                      //   },
+                      //   child: model.imageFile != null
+                      //       ? Image.file(model.imageFile)
+                      //       : isUpdate
+                      //           ? Image.network(book.imageURL)
+                      //           : Container(
+                      //               color: Colors.grey,
+                      //             ),
+                      // ),
                     ),
                     TextField(
                       controller: textEditingController,
                       onChanged: (text) {
-                        model.bookTitle = text;
+                        model.newBookTitle = text;
                       },
                     ),
                     ElevatedButton(
